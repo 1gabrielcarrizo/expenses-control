@@ -4,14 +4,17 @@ import IconoNuevoGasto from './assets/img/nuevo-gasto.svg'
 import Modal from './components/Modal'
 import { generarId } from './helpers'
 import ExpensesList from './components/ExpensesList'
+import Filter from './components/Filter'
 
 const App = () => {
-  const [presupuesto, setPresupuesto] = useState(0)
+  const [presupuesto, setPresupuesto] = useState(Number(localStorage.getItem('presupuesto')) || 0)
   const [isValidPresupuesto, setIsValidPresupuesto] = useState(false)
   const [modal, setModal] = useState(false)
   const [animarModal, setAnimarModal] = useState(false)
-  const [gastos, setGastos] = useState([])
+  const [gastos, setGastos] = useState(JSON.parse(localStorage.getItem('gastos')) || [])
   const [gastoEditar, setGastoEditar] = useState({})
+  const [filtro, setFiltro] = useState('')
+  const [gastosFiltrados, setGastosFiltrados] = useState([])
 
   useEffect(() => {
     if (Object.keys(gastoEditar).length > 0) {
@@ -23,6 +26,31 @@ const App = () => {
     }
   }, [gastoEditar])
 
+  useEffect(() => {
+    localStorage.setItem('presupuesto', presupuesto || 0)
+  }, [presupuesto])
+
+  useEffect(() => {
+    localStorage.setItem('gastos', JSON.stringify(gastos) || [])
+  }, [gastos])
+  
+  useEffect(() => {
+    if(filtro){
+      // filtrar gastos por categoria
+      const gastosFiltrados = gastos.filter(gasto => gasto.categoria === filtro)
+      setGastosFiltrados(gastosFiltrados)
+    }
+  }, [filtro])
+  
+
+  useEffect(() => {
+    const presupuestoLS = Number(localStorage.getItem('presupuesto')) || 0
+    if (presupuestoLS > 0) {
+      setIsValidPresupuesto(true)
+    }
+  }, [])
+
+
   const handleNuevoGasto = () => {
     setModal(true)
     setGastoEditar({})
@@ -33,12 +61,12 @@ const App = () => {
   }
 
   const guardarGasto = (gasto) => {
-    if(gasto.id){
+    if (gasto.id) {
       // actualizar
       const gastosActualizados = gastos.map((gastoState) => gastoState.id === gasto.id ? gasto : gastoState)
       setGastos(gastosActualizados)
       setGastoEditar({})
-    }else{
+    } else {
       // nuevo gasto
       gasto.id = generarId()
       gasto.fecha = Date.now()
@@ -62,12 +90,14 @@ const App = () => {
         presupuesto={presupuesto}
         setPresupuesto={setPresupuesto}
         isValidPresupuesto={isValidPresupuesto}
-        setIsValidPresupuesto={setIsValidPresupuesto} />
+        setIsValidPresupuesto={setIsValidPresupuesto}
+        setGastos={setGastos} />
 
       {isValidPresupuesto && (
         <>
           <main>
-            <ExpensesList gastos={gastos} setGastoEditar={setGastoEditar} eliminarGasto={eliminarGasto} />
+            <Filter filtro={filtro} setFiltro={setFiltro}/>
+            <ExpensesList gastos={gastos} setGastoEditar={setGastoEditar} eliminarGasto={eliminarGasto} filtro={filtro} gastosFiltrados={gastosFiltrados} />
           </main>
           <div className="nuevo-gasto">
             <img src={IconoNuevoGasto} alt="icono-nuevo-gasto" onClick={handleNuevoGasto} />
