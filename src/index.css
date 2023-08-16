@@ -348,6 +348,7 @@ main {
     top: 3rem;
     width: 3rem;
     height: 3rem;
+    z-index: 1;
 }
 .modal .cerrar-modal img {
     width: 100%;
@@ -361,6 +362,12 @@ main {
     transition-timing-function: ease-in;
     opacity: 0;
 }
+@media screen and (max-width: 500px){
+        .modal .formulario{
+            max-width: 80%;
+        }
+}
+
 .modal label {
     color: var(--blanco);
 }
@@ -408,7 +415,7 @@ body .modal {
 
 @media (max-width: 410px) {
     h1{
-        font-size: 3rem;
+        font-size: 2.8rem;
         word-wrap: break-word;
     }
 }
