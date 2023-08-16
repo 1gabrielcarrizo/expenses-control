@@ -145,8 +145,8 @@ header h1 {
     border-left: 5px solid #b91c1c;
     color: #b91c1c;
 }
-.alerta.success {
-}
+/* .alerta.success {
+} */
 
 .contenedor {
     width: 90%;
@@ -335,12 +335,13 @@ main {
 }
 
 .modal {
-    position: absolute;
+    position: fixed;
     background-color: rgb(0 0 0 / 0.92);
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
+    height: 100vh;
 }
 .modal .cerrar-modal {
     position: absolute;
