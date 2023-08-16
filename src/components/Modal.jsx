@@ -1,16 +1,26 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import CerrarBtn from '../assets/img/cerrar.svg'
 import Message from './Message'
 
-const Modal = ({setModal, animarModal, setAnimarModal, guardarGasto}) => {
+const Modal = ({ setModal, animarModal, setAnimarModal, guardarGasto, gastoEditar, setGastoEditar }) => {
     const [nombre, setNombre] = useState('')
     const [cantidad, setCantidad] = useState('')
     const [categoria, setCategoria] = useState('')
 
     const [mensaje, setMensaje] = useState('')
 
+    useEffect(() => {
+        if (Object.keys(gastoEditar).length > 0) {
+            setNombre(gastoEditar.nombre)
+            setCantidad(gastoEditar.cantidad)
+            setCategoria(gastoEditar.categoria)
+        }
+    }, [])
+
+
     const ocultarModal = () => {
         setAnimarModal(false)
+        setGastoEditar({})
         
         setTimeout(() => {
             setModal(false)
@@ -19,14 +29,14 @@ const Modal = ({setModal, animarModal, setAnimarModal, guardarGasto}) => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        if([nombre, cantidad, categoria].includes('')){
+        if ([nombre, cantidad, categoria].includes('')) {
             setMensaje('Todos los campos son obligatorios')
             setTimeout(() => {
                 setMensaje('')
             }, 3000);
             return
         }
-        guardarGasto({nombre, cantidad, categoria})
+        guardarGasto({ nombre, cantidad, categoria })
     }
 
     return (
