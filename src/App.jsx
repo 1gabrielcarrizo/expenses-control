@@ -5,6 +5,7 @@ import Modal from './components/Modal'
 import { generarId } from './helpers'
 import ExpensesList from './components/ExpensesList'
 import Filter from './components/Filter'
+import Footer from './components/Footer'
 
 const App = () => {
   const [presupuesto, setPresupuesto] = useState(Number(localStorage.getItem('presupuesto')) || 0)
@@ -33,15 +34,15 @@ const App = () => {
   useEffect(() => {
     localStorage.setItem('gastos', JSON.stringify(gastos) || [])
   }, [gastos])
-  
+
   useEffect(() => {
-    if(filtro){
+    if (filtro) {
       // filtrar gastos por categoria
       const gastosFiltrados = gastos.filter(gasto => gasto.categoria === filtro)
       setGastosFiltrados(gastosFiltrados)
     }
   }, [filtro])
-  
+
 
   useEffect(() => {
     const presupuestoLS = Number(localStorage.getItem('presupuesto')) || 0
@@ -96,15 +97,16 @@ const App = () => {
       {isValidPresupuesto && (
         <>
           <main>
-            <Filter filtro={filtro} setFiltro={setFiltro}/>
+            <Filter filtro={filtro} setFiltro={setFiltro} />
             <ExpensesList gastos={gastos} setGastoEditar={setGastoEditar} eliminarGasto={eliminarGasto} filtro={filtro} gastosFiltrados={gastosFiltrados} />
           </main>
           <div className="nuevo-gasto">
             <img src={IconoNuevoGasto} alt="icono-nuevo-gasto" onClick={handleNuevoGasto} />
           </div>
+          {/* <Footer /> */}
         </>
       )}
-
+      <Footer />
       {modal && <Modal setModal={setModal} animarModal={animarModal} setAnimarModal={setAnimarModal} guardarGasto={guardarGasto} gastoEditar={gastoEditar} setGastoEditar={setGastoEditar} />}
     </div>
   )
