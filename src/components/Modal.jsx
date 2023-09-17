@@ -33,6 +33,7 @@ const Modal = ({ setModal, animarModal, setAnimarModal, guardarGasto, gastoEdita
         }, 500);
     }
 
+    // validar el modal
     const handleSubmit = (e) => {
         e.preventDefault()
         if ([nombre, precio, cantidad, categoria].includes('')) {
