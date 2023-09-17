@@ -10,7 +10,7 @@ const BudgetControl = ({ presupuesto, gastos, setGastos, setPresupuesto, setIsVa
     const [porcentaje, setPorcentaje] = useState(0)
 
     useEffect(() => {
-        const totalGastado = gastos.reduce((total, gasto) => gasto.cantidad + total, 0)
+        const totalGastado = gastos.reduce((total, gasto) => gasto.precio*gasto.cantidad + total, 0)
         const totalDisponible = presupuesto - totalGastado
         // calcular el porcentaje gastado
         const nuevoPorcentaje = (((presupuesto - totalDisponible) / presupuesto) * 100).toFixed(2)
@@ -23,7 +23,7 @@ const BudgetControl = ({ presupuesto, gastos, setGastos, setPresupuesto, setIsVa
         }, 1000);
     }, [gastos])
 
-
+    // cambia el formato del presupuesto
     const formatearCantidad = (cantidad) => {
         return cantidad.toLocaleString('en-US', {
             style: 'currency',

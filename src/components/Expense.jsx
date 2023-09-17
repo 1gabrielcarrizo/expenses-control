@@ -21,7 +21,7 @@ const diccionarioIconos = {
 }
 
 const Expense = ({ gasto, setGastoEditar, eliminarGasto }) => {
-    const { categoria, nombre, cantidad, id, fecha } = gasto
+    const { categoria, nombre, precio, cantidad, id, fecha } = gasto
 
     const leadingActions = () => (
         <LeadingActions>
@@ -46,15 +46,18 @@ const Expense = ({ gasto, setGastoEditar, eliminarGasto }) => {
                     <div className='contenido-gasto'>
                         <img src={diccionarioIconos[categoria]} alt="Icono Gasto" />
                         <div className="descripcion-gasto">
-                            <p className="categoria">{categoria}</p>
-                            <p className="nombre-gasto">{nombre}</p>
+                            <p className="categoria">Categoria: {categoria}</p>
+                            <p className="nombre-gasto">Nombre: {nombre}</p>
+                            <p className='cantidad'>Cantidad: {cantidad}</p>
+                            <p className='cantidad'>Precio: ${precio}</p>
                             <p className="fecha-gasto">
                                 Agregado el: {''}
                                 <span>{formatearFecha(fecha)}</span>
                             </p>
                         </div>
                     </div>
-                    <p className="cantidad-gasto">${cantidad}</p>
+                    {/* <p className="cantidad-gasto">${cantidad}</p> */}
+                    <p className="precio-gasto">Total: ${precio * cantidad}</p>
                 </div>
             </SwipeableListItem>
         </SwipeableList>

@@ -8,14 +8,22 @@ const ExpensesList = ({ gastos, setGastoEditar, eliminarGasto, filtro, gastosFil
         <>
           <h2>{gastosFiltrados.length ? 'Gastos' : 'No hay gastos en esta categoria'}</h2>
           {gastosFiltrados.map((gasto) => (
-            <Expense key={gasto.id} gasto={gasto} setGastoEditar={setGastoEditar} eliminarGasto={eliminarGasto} />
+            <Expense
+            key={gasto.id}
+            gasto={gasto}
+            setGastoEditar={setGastoEditar}
+            eliminarGasto={eliminarGasto} />
           ))}
         </>
       ) : (
         <>
           <h2>{gastos.length ? 'Gastos' : 'No hay gastos todavia'}</h2>
           {gastos.map((gasto) => (
-            <Expense key={gasto.id} gasto={gasto} setGastoEditar={setGastoEditar} eliminarGasto={eliminarGasto} />
+            <Expense
+            key={gasto.id}
+            gasto={gasto}
+            setGastoEditar={setGastoEditar}
+            eliminarGasto={eliminarGasto} />
           ))}
         </>
       )}

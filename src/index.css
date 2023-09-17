@@ -62,7 +62,7 @@ header h1 {
 .formulario {
     width: 95%;
     margin: 0 auto;
-    padding: 10rem 0;
+    padding: 10rem 3rem;
 }
 
 @media (min-width: 768px) {
@@ -88,7 +88,7 @@ header h1 {
     margin-bottom: 2rem;
 }
 
-@media screen and (max-width: 540px) {
+@media screen and (max-width: 0px) {
     .formulario .campo {
         display: block;
     }
@@ -319,7 +319,16 @@ main {
     width: 100%;
 }
 
-.cantidad-gasto {
+@media screen and (max-width: 540px) {
+    .gasto {
+        flex-direction: column;
+    }
+    /* img{
+        display: none;
+    } */
+}
+
+.precio-gasto {
     font-size: 2.4rem;
     color: var(--negro);
     font-weight: 900;
@@ -331,6 +340,15 @@ main {
     gap: 2rem;
 }
 
+@media screen and (max-width: 540px){
+    .contenido-gasto{
+        flex-direction: column;
+    }
+    .descripcion-gasto{
+        margin-top: 1.5rem;
+    }
+}
+
 .contenido-gasto img {
     width: 10rem;
 }
@@ -339,7 +357,8 @@ main {
     margin: 0 0 0.3rem 0;
 }
 
-.descripcion-gasto .categoria {
+.descripcion-gasto .categoria,
+.descripcion-gasto .cantidad {
     color: var(--gris);
     font-size: 1.6rem;
     font-weight: 900;

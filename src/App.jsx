@@ -8,11 +8,11 @@ import Filter from './components/Filter'
 import Footer from './components/Footer'
 
 const App = () => {
-  const [presupuesto, setPresupuesto] = useState(Number(localStorage.getItem('presupuesto')) || 0)
-  const [isValidPresupuesto, setIsValidPresupuesto] = useState(false)
-  const [modal, setModal] = useState(false)
+  const [presupuesto, setPresupuesto] = useState(Number(localStorage.getItem('presupuesto')) || 0) // valor inicial del presupuesto
+  const [isValidPresupuesto, setIsValidPresupuesto] = useState(false) // permite ver la otra pantalla si es true
+  const [modal, setModal] = useState(false) // oculta el modal por defecto
   const [animarModal, setAnimarModal] = useState(false)
-  const [gastos, setGastos] = useState(JSON.parse(localStorage.getItem('gastos')) || [])
+  const [gastos, setGastos] = useState(JSON.parse(localStorage.getItem('gastos')) || []) // contiene todos los gastos
   const [gastoEditar, setGastoEditar] = useState({})
   const [filtro, setFiltro] = useState('')
   const [gastosFiltrados, setGastosFiltrados] = useState([])
@@ -51,7 +51,7 @@ const App = () => {
     }
   }, [])
 
-
+  // abrir el modal
   const handleNuevoGasto = () => {
     setModal(true)
     setGastoEditar({})
@@ -71,8 +71,10 @@ const App = () => {
       // nuevo gasto
       gasto.id = generarId()
       gasto.fecha = Date.now()
+      // hacemos una copia del array y agregamos el nuevo gasto
       setGastos([...gastos, gasto])
     }
+    // ocultamos el modal una vez guardamos el nuevo gasto
     setAnimarModal(false)
     setTimeout(() => {
       setModal(false)
@@ -94,11 +96,19 @@ const App = () => {
         setIsValidPresupuesto={setIsValidPresupuesto}
         setGastos={setGastos} />
 
+      {/* si es presupuesto es valido, muestra el icono del modal para añadir un gasto */}
       {isValidPresupuesto && (
         <>
           <main>
-            <Filter filtro={filtro} setFiltro={setFiltro} />
-            <ExpensesList gastos={gastos} setGastoEditar={setGastoEditar} eliminarGasto={eliminarGasto} filtro={filtro} gastosFiltrados={gastosFiltrados} />
+            <Filter
+              filtro={filtro}
+              setFiltro={setFiltro} />
+            <ExpensesList
+              gastos={gastos}
+              setGastoEditar={setGastoEditar}
+              eliminarGasto={eliminarGasto}
+              filtro={filtro}
+              gastosFiltrados={gastosFiltrados} />
           </main>
           <div className="nuevo-gasto">
             <img src={IconoNuevoGasto} alt="icono-nuevo-gasto" onClick={handleNuevoGasto} />
@@ -107,7 +117,13 @@ const App = () => {
         </>
       )}
       <Footer />
-      {modal && <Modal setModal={setModal} animarModal={animarModal} setAnimarModal={setAnimarModal} guardarGasto={guardarGasto} gastoEditar={gastoEditar} setGastoEditar={setGastoEditar} />}
+      {modal && <Modal
+        setModal={setModal}
+        animarModal={animarModal}
+        setAnimarModal={setAnimarModal}
+        guardarGasto={guardarGasto}
+        gastoEditar={gastoEditar}
+        setGastoEditar={setGastoEditar} />}
     </div>
   )
 }
